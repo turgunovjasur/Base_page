@@ -1,7 +1,11 @@
+import time
+
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
-from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 
 
 class BasePage:
@@ -89,4 +93,19 @@ class BasePage:
         self.find_element(locator)
         self.clear_and_send_keys(locator, text)
         self.click(locator)
+
+    def input_text_elem(self, locator, elem_locator):
+        self.wait_for_element_clickable(locator)
+        self.click(locator)
+        time.sleep(3)
+        self.wait_for_element_clickable(elem_locator)
+        self.click(elem_locator)
+        time.sleep(3)
+
+    def wait_and_click(self, locator):
+        self.wait_for_element_clickable(locator)
+        self.find_element(locator)
+        time.sleep(1)
+        self.click(locator)
+
 
